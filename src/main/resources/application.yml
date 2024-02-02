@@ -1,0 +1,10 @@
+server:
+  servlet:
+    context-path: /delivery/api
+
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      uri: ${MONGO_DB_URI:mongodb+srv://wakanda:NiAVCUsFGBBExp3U@cluster0.djcfb5x.mongodb.net/wakanda?retryWrites=true&w=majority}
+      auto-index-creation: true
