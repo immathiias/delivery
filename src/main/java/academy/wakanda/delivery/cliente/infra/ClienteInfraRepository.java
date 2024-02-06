@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 @Log4j2
@@ -33,5 +34,14 @@ public class ClienteInfraRepository implements ClienteRepository {
         List<Cliente> clientes = clienteMongoSpringRepository.findAll();
         log.info("[finaliza] ClienteInfraRepository - buscaTodosClientes");
         return clientes;
+    }
+
+    @Override
+    public Cliente buscaClientePorId(UUID idCliente) {
+        log.info("[inicia] ClienteInfraRepository - buscaClientePorId");
+        Cliente cliente = clienteMongoSpringRepository.findById(idCliente)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
+        log.info("[finaliza] ClienteInfraRepository - buscaClientePorId");
+        return cliente;
     }
 }

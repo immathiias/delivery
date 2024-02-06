@@ -7,6 +7,7 @@ import academy.wakanda.delivery.credencial.domain.Credencial;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -24,10 +25,10 @@ public class AutenticacaoApplicationService implements AutenticacaoService {
     @Override
     public Token autentica(UsernamePasswordAuthenticationToken userCredentials) {
         log.info("[inicia] AutenticacaoApplicationService - autentica");
-        var auth = authenticationManager.authenticate(userCredentials);
+        Authentication auth = authenticationManager.authenticate(userCredentials);
         Token token = Token.builder()
                 .tipo("Bearer")
-                .token(tokenService.gerarToken((Credencial) auth.getPrincipal()))
+                .token(tokenService.gerarToken(auth))
                 .build();
         log.info("[finaliza] AutenticacaoApplicationService - autentica");
         return token;

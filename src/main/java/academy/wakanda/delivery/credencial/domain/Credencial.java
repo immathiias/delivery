@@ -32,15 +32,14 @@ public class Credencial implements UserDetails {
 
     public Credencial(String email, @NotNull String senha) {
         this.email = email;
-        var encriptador = new BCryptPasswordEncoder();
-        this.senha = encriptador.encode(senha);
+        this.senha = encriptaSenha(senha);
         this.role = UsuarioRole.CLIENTE;
         this.validado = true;
     }
 
-    public void encriptaSenha() {
+    public String encriptaSenha(String senha) {
         var encriptador = new BCryptPasswordEncoder();
-        this.senha = encriptador.encode(this.senha);
+        return encriptador.encode(senha);
     }
 
     public void validaCredencial() {

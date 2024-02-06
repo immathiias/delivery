@@ -8,6 +8,7 @@ import java.util.Optional;
 import academy.wakanda.delivery.credencial.domain.Credencial;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
@@ -23,13 +24,17 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
+
+    public String gerarToken(Authentication authentication) {
+        return gerarToken((Credencial) authentication.getPrincipal());
+    }
     public String gerarToken(Credencial credencial) {
         try {
-            log.info("[start] TokenService - criação de token");
+            log.info("[inicia] TokenService - criação de token");
             Algorithm algorithm = Algorithm.HMAC256(secret);
-            String token = JWT.create().withIssuer("API-Campeonato").withSubject(credencial.getUsername())
+            String token = JWT.create().withIssuer("api-delivery").withSubject(credencial.getUsername())
                     .withExpiresAt(genExpirationDate()).sign(algorithm);
-            log.info("[finish] TokenService - criação de token");
+            log.info("[finaliza] TokenService - criação de token");
             return token;
         } catch (JWTCreationException ex) {
             throw new RuntimeException("Erro ao gerar o token.");
@@ -39,10 +44,11 @@ public class TokenService {
     public String validarToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
+            String tokenExtraido = token.substring(7, token.length());
             return JWT.require(algorithm)
-                    .withIssuer("API-Campeonato")
+                    .withIssuer("api-delivery")
                     .build()
-                    .verify(token)
+                    .verify(tokenExtraido)
                     .getSubject();
         } catch (JWTVerificationException e) {
             throw new RuntimeException("O Token enviado está inválido. Tente novamente.");
@@ -53,7 +59,7 @@ public class TokenService {
         try {
             var algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("API-Campeonato")
+                    .withIssuer("api-delivery")
                     .build()
                     .verify(token)
                     .getSubject();
@@ -65,7 +71,7 @@ public class TokenService {
     }
 
     public Optional<String> getEmailByBearerToken(String bearerToken) {
-        log.info("[inicio] TokenService - getEmailByBearerToken");
+        log.info("[inicia] TokenService - getEmailByBearerToken");
         String token = bearerToken.substring(7, bearerToken.length());
         log.info(token);
         log.info("[finaliza] TokenService - getEmailByBearerToken");

@@ -12,6 +12,7 @@ import lombok.Data;
 @Data
 @Builder
 public class AutenticacaoRequest {
+    @NotNull
     @NotBlank(message = "O email não pode estar em branco!")
     @Email
     private String email;

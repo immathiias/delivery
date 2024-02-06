@@ -1,5 +1,6 @@
 package academy.wakanda.delivery.cliente.domain;
 
+import academy.wakanda.delivery.cliente.application.api.ClienteAlteracaoRequest;
 import academy.wakanda.delivery.cliente.application.api.ClienteRequest;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -42,5 +43,12 @@ public class Cliente {
         this.telefone = clienteRequest.getTelefone();
 
         this.dataHoraDoCadastro = LocalDateTime.now();
+    }
+
+    public void altera(ClienteAlteracaoRequest clienteAlteracaoRequest) {
+        this.nome = clienteAlteracaoRequest.getNome();
+        this.telefone = clienteAlteracaoRequest.getTelefone();
+
+        this.dataHoraUltimaAlteracao = LocalDateTime.now();
     }
 }
