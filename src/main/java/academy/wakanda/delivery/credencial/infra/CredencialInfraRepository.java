@@ -26,6 +26,6 @@ public class CredencialInfraRepository implements CredencialRepository {
         var credencial = credencialMongoSpringRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Não existe credencial para o Cliente informado!"));
         log.info("[finaliza] CredencialInfraRepository - buscaCredencialPorEmail");
-        return null;
+        return credencial;
     }
 }
