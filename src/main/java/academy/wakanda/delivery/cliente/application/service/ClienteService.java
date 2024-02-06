@@ -9,5 +9,6 @@ public interface ClienteService {
     ClienteResponse criaCliente(ClienteRequest clienteRequest);
     List<ClienteListResponse> buscaTodosClientes();
     ClienteDetalhadoResponse buscaClientePorId(UUID idCliente);
-    void atualizaClientePorId(UUID idCliente, ClienteAlteracaoRequest clienteAlteracaoRequest);
+    void atualizaClientePorId(String token, UUID idCliente, ClienteAlteracaoRequest clienteAlteracaoRequest);
+    void deletaClientePorId(String token, UUID idCliente);
 }

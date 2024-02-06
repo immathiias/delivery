@@ -51,4 +51,9 @@ public class Cliente {
 
         this.dataHoraUltimaAlteracao = LocalDateTime.now();
     }
+    public void validaCliente(UUID idCliente) {
+        if (!this.idCliente.equals(idCliente)) {
+            throw new RuntimeException("Credencial de autenticação não é válida!");
+        }
+    }
 }

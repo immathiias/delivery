@@ -49,11 +49,23 @@ public class ClienteApplicationService implements ClienteService {
     }
 
     @Override
-    public void atualizaClientePorId(UUID idCliente, ClienteAlteracaoRequest clienteAlteracaoRequest) {
+    public void atualizaClientePorId(String token, UUID idCliente, ClienteAlteracaoRequest clienteAlteracaoRequest) {
         log.info("[inicia] ClienteApplicationService - atualizaClientePorId");
+        tokenService.validarToken(token);
         Cliente cliente = clienteRepository.buscaClientePorId(idCliente);
         cliente.altera(clienteAlteracaoRequest);
         clienteRepository.salva(cliente);
         log.info("[finaliza] ClienteApplicationService - atualizaClientePorId");
+    }
+
+    @Override
+    public void deletaClientePorId(String token, UUID idCliente) {
+        log.info("[inicia] ClienteApplicationService - deletaClientePorId");
+        String clienteEmail = tokenService.getEmailByBearerToken(token)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
+        Cliente cliente = clienteRepository.buscaClientePorEmail(clienteEmail);
+        cliente.validaCliente(idCliente);
+        clienteRepository.deletaCliente(cliente);
+        log.info("[finaliza] ClienteApplicationService - deletaClientePorId");
     }
 }

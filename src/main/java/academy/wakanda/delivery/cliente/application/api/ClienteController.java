@@ -1,7 +1,6 @@
 package academy.wakanda.delivery.cliente.application.api;
 
 import academy.wakanda.delivery.cliente.application.service.ClienteService;
-import academy.wakanda.delivery.config.security.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.validation.annotation.Validated;
@@ -16,7 +15,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ClienteController implements ClienteAPI {
     private final ClienteService clienteService;
-    private final TokenService tokenService;
 
     @Override
     public ClienteResponse postCliente(ClienteRequest clienteRequest) {
@@ -47,8 +45,14 @@ public class ClienteController implements ClienteAPI {
     public void patchClientePorId(String token, UUID idCliente, ClienteAlteracaoRequest clienteAlteracaoRequest) {
         log.info("[inicia] ClienteController - patchClientePorId");
         log.info("[idCliente] {}", idCliente);
-        tokenService.validarToken(token);
-        clienteService.atualizaClientePorId(idCliente, clienteAlteracaoRequest);
+        clienteService.atualizaClientePorId(token, idCliente, clienteAlteracaoRequest);
         log.info("[finaliza] ClienteController - patchClientePorId");
+    }
+
+    @Override
+    public void deleteClientePorId(String token, UUID idCliente) {
+        log.info("[inicia] ClienteController - deleteClientePorId");
+        clienteService.deletaClientePorId(token, idCliente);
+        log.info("[finaliza] ClienteController - deleteClientePorId");
     }
 }

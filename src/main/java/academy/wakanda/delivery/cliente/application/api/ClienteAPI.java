@@ -26,4 +26,7 @@ public interface ClienteAPI {
     @PatchMapping("/{idCliente}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     void patchClientePorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable UUID idCliente, @RequestBody ClienteAlteracaoRequest clienteAlteracaoRequest);
+    @DeleteMapping("/{idCliente}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void deleteClientePorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable UUID idCliente);
 }
