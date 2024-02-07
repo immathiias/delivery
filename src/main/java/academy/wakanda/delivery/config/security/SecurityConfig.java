@@ -4,12 +4,12 @@ import academy.wakanda.delivery.config.security.service.TokenService;
 import academy.wakanda.delivery.credencial.application.service.CredencialService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,25 +20,25 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 @RequiredArgsConstructor
-public class SecurityConfiguration {
+public class SecurityConfig {
 
     private final TokenService tokenService;
     private final CredencialService credencialService;
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(csrf -> csrf.disable())
-                .sessionManagement(
-                        sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/v1/entrega").hasAnyRole("ADMIN")
+                        .requestMatchers("/v1/pedido").hasAnyRole("CLIENTE")
                         .requestMatchers("/public/**").permitAll()
-                        .requestMatchers("/v1/pedido").hasRole("CLIENTE")
-                        .requestMatchers("/v1/entrega").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(new FiltroToken(tokenService, credencialService), UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .sessionManagement(httpSecuritySessionManagementConfigurer ->
+                        httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        return http.build();
     }
 
     @Bean

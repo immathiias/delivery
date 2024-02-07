@@ -8,8 +8,10 @@ spring:
       authentication-database: admin
       uri: ${MONGO_DB_URI:mongodb+srv://wakanda:NiAVCUsFGBBExp3U@cluster0.djcfb5x.mongodb.net/wakanda?retryWrites=true&w=majority}
       auto-index-creation: true
+  main:
+    allow-circular-references: true
 
 api:
   security:
     token:
-      secret: ${JWT_SECRET:DU920QDJAOKPSD0AOZ}
+      secret: ${JWT_SECRET:DLPI21D9ITPLAS}

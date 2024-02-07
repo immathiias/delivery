@@ -25,6 +25,6 @@ public class AutenticacaoSecurityService implements UserDetailsService {
         log.info("[inicia] AutenticacaoSecurityService - buscando credencial pelo usuario");
         var credencial = credencialRepository.buscaCredencialPorEmail(email);
         log.info("[finaliza] AutenticacaoSecurityService - buscando credencial pelo usuario");
-        return Optional.ofNullable(credencial).orElseThrow(() -> new RuntimeException("Não existe credencial para o Usuário informado!"));
+        return Optional.ofNullable(credencial).orElseThrow(() -> new RuntimeException("Não existe credencial para o Email informado!"));
     }
 }

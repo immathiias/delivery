@@ -1,15 +1,20 @@
 package academy.wakanda.delivery.cliente.domain;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-
-import java.util.UUID;
 
 @Getter
 public class Endereco {
-    private UUID idEndereco;
+    private Integer idEndereco;
+    @NotBlank
     private String estado;
+    @NotBlank
     private String cidade;
+    @NotBlank
     private String rua;
-    private String numero;
+    @NotNull
+    private Integer numero;
     private String complemento;
+    private String pontoReferencia;
 }
