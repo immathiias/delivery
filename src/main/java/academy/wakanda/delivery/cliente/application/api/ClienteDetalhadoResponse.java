@@ -2,6 +2,7 @@ package academy.wakanda.delivery.cliente.application.api;
 
 import academy.wakanda.delivery.cliente.domain.Cliente;
 import academy.wakanda.delivery.cliente.domain.Endereco;
+import academy.wakanda.delivery.pedido.domain.Pedido;
 import lombok.Value;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ public class ClienteDetalhadoResponse {
     private String nome;
     private String telefone;
     private List<Endereco> enderecos;
+    private List<Pedido> pedidos;
     private LocalDateTime dataHoraDoCadastro;
     private LocalDateTime dataHoraUltimaAlteracao;
 
@@ -24,6 +26,7 @@ public class ClienteDetalhadoResponse {
         this.nome = cliente.getNome();
         this.telefone = cliente.getTelefone();
         this.enderecos = cliente.getEnderecos();
+        this.pedidos = cliente.getPedidos();
         this.dataHoraDoCadastro = cliente.getDataHoraDoCadastro();
         this.dataHoraUltimaAlteracao = cliente.getDataHoraUltimaAlteracao();
     }

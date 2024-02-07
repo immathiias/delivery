@@ -46,7 +46,7 @@ public class FiltroToken extends OncePerRequestFilter {
     }
 
     private Credencial recuperaUsuario(String token) {
-        var email = tokenService.validarToken(token);
+        var email = tokenService.getSubject(token);
         return credencialService.buscaCredencialPorEmail(email);
     }
 
