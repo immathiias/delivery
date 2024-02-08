@@ -7,6 +7,7 @@ import academy.wakanda.delivery.config.security.domain.ValidaConteudoAuthorizati
 import academy.wakanda.delivery.config.security.service.TokenService;
 import academy.wakanda.delivery.credencial.application.service.CredencialService;
 import academy.wakanda.delivery.credencial.domain.Credencial;
+import academy.wakanda.delivery.handler.APIException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -54,14 +55,14 @@ public class FiltroToken extends OncePerRequestFilter {
         log.info("[inicia] recuperaToken - extraindo o token dos cabecalhos da requisicao");
         var AuthorizationHeaderValueOpt = Optional.ofNullable(recuperaValorAuthorizationHeader(requestOpt));
         String AuthorizationHeaderValue = AuthorizationHeaderValueOpt.filter(new ValidaConteudoAuthorizationHeader())
-                .orElseThrow(() -> new RuntimeException("Token inválido!"));
+                .orElseThrow(() -> APIException.build(HttpStatus.UNAUTHORIZED, "Token inválido!"));
         log.info("[finaliza] recuperaToken - extraindo o token dos cabecalhos da requisicao");
         return AuthorizationHeaderValue.substring(7, AuthorizationHeaderValue.length());
     }
 
     private String recuperaValorAuthorizationHeader(HttpServletRequest request) {
         return Optional.ofNullable(request.getHeader("Authorization"))
-                .orElseThrow(() -> new RuntimeException("O token não está presente na requisição!"));
+                .orElseThrow(() -> APIException.build(HttpStatus.FORBIDDEN, "O token não está presente na requisição!"));
     }
 
     @Override

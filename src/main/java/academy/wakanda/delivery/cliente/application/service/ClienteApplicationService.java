@@ -6,9 +6,11 @@ import academy.wakanda.delivery.cliente.domain.Cliente;
 import academy.wakanda.delivery.cliente.domain.Endereco;
 import academy.wakanda.delivery.config.security.service.TokenService;
 import academy.wakanda.delivery.credencial.application.service.CredencialService;
+import academy.wakanda.delivery.handler.APIException;
 import academy.wakanda.delivery.pedido.domain.Pedido;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,7 +85,7 @@ public class ClienteApplicationService implements ClienteService {
     public void deletaClientePorId(String token, UUID idCliente) {
         log.info("[inicia] ClienteApplicationService - deletaClientePorId");
         String clienteEmail = tokenService.getEmailByBearerToken(token)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
+                .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Cliente não encontrado!"));
         Cliente cliente = clienteRepository.buscaClientePorEmail(clienteEmail);
         cliente.validaCliente(idCliente);
         clienteRepository.deletaCliente(cliente);

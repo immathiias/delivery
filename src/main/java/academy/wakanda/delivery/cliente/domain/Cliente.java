@@ -2,6 +2,7 @@ package academy.wakanda.delivery.cliente.domain;
 
 import academy.wakanda.delivery.cliente.application.api.ClienteAlteracaoRequest;
 import academy.wakanda.delivery.cliente.application.api.ClienteRequest;
+import academy.wakanda.delivery.handler.APIException;
 import academy.wakanda.delivery.pedido.application.api.PedidoRequest;
 import academy.wakanda.delivery.pedido.domain.Pedido;
 import jakarta.validation.constraints.Email;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ public class Cliente {
     }
     public void validaCliente(UUID idCliente) {
         if (!this.idCliente.equals(idCliente)) {
-            throw new RuntimeException("Credencial de autenticação não é válida!");
+            throw APIException.build(HttpStatus.UNAUTHORIZED, "Credencial de autenticação não é válida!");
         }
     }
 

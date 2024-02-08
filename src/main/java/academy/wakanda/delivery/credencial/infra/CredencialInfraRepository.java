@@ -2,8 +2,10 @@ package academy.wakanda.delivery.credencial.infra;
 
 import academy.wakanda.delivery.credencial.application.repository.CredencialRepository;
 import academy.wakanda.delivery.credencial.domain.Credencial;
+import academy.wakanda.delivery.handler.APIException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -24,7 +26,7 @@ public class CredencialInfraRepository implements CredencialRepository {
     public Credencial buscaCredencialPorEmail(String email) {
         log.info("[inicia] CredencialInfraRepository - buscaCredencialPorEmail");
         var credencial = credencialMongoSpringRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Não existe credencial para o Cliente informado!"));
+                .orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Não existe credencial para o Cliente informado!"));
         log.info("[finaliza] CredencialInfraRepository - buscaCredencialPorEmail");
         return credencial;
     }
