@@ -2,6 +2,8 @@ package academy.wakanda.delivery.cliente.domain;
 
 import academy.wakanda.delivery.cliente.application.api.ClienteAlteracaoRequest;
 import academy.wakanda.delivery.cliente.application.api.ClienteRequest;
+import academy.wakanda.delivery.pedido.application.api.PedidoRequest;
+import academy.wakanda.delivery.pedido.domain.Pedido;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
@@ -13,8 +15,10 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -32,6 +36,7 @@ public class Cliente {
     @NotBlank
     private String telefone;
     private List<Endereco> enderecos;
+    private List<Pedido> pedidos;
 
     private LocalDateTime dataHoraDoCadastro;
     private LocalDateTime dataHoraUltimaAlteracao;
@@ -55,5 +60,19 @@ public class Cliente {
         if (!this.idCliente.equals(idCliente)) {
             throw new RuntimeException("Credencial de autenticação não é válida!");
         }
+    }
+
+    public void adicionaPedido(Pedido pedido) {
+        if (this.pedidos == null) {
+            this.pedidos = new ArrayList<>();
+        }
+        this.pedidos.add(pedido);
+    }
+
+    public void adicionaEndereco(Endereco endereco) {
+        if (this.enderecos == null) {
+            this.enderecos = new ArrayList<>();
+        }
+        this.enderecos.add(endereco);
     }
 }
