@@ -2,9 +2,15 @@
 Um projeto back-end para aplicativos de Delivery feito por Mathias.
 
 ## Índice
-- <a href="#funcionalidades">Funcionalidades do Projeto</a>
-- <a href="#execucao">Como executar a aplicação</a>
-- <a href="#tecnologias">Tecnologias utilizadas</a>
+- <a href="#funcionalidades-do-projeto">Funcionalidades do Projeto</a>
+- <a href="#como-rodar-o-projeto">Como executar a aplicação</a>
+- <a href="#metodos-de-cliente">Métodos do Cliente</a>
+- <a href="#metodos-de-autenticacao">Métodos de Autenticação</a>
+- <a href="#metodos-de-pedido">Métodos de Pedido</a>
+- <a href="#metodos-de-entrega">Métodos de Entrega</a>
+- <a href="#tecnologias-utilizadas">Tecnologias utilizadas</a>
+- <a href="#proximos-passos">Próximos passos</a>
+- <a href="#autor">Autor</a>
 
 ## 🖥️Funcionalidades do Projeto
 - [x] Cadastro de cliente
@@ -18,7 +24,7 @@ Um projeto back-end para aplicativos de Delivery feito por Mathias.
 - Baixar o seguinte arquivo [Delivery](https://mediafire.com)
 - Para executar basta abrir e o projeto irá iniciar na porta 8080
 
-#  📱Métodos do Cliente
+#  📱Metodos do Cliente
 ```
 # Criar um cliente
 Para criar um cliente siga estes passos:
@@ -66,7 +72,7 @@ Para deletar um cliente existente siga estes passos:
 4. Deve retornar o status code 204 NO_CONTENT.
 ```
 
-#  📱Métodos de Autenticação
+#  📱Metodos de Autenticacao
 ```
 # Autenticar um Cliente
 Para autenticar um cliente siga estes passos:
@@ -81,7 +87,7 @@ Para autenticar um cliente siga estes passos:
 - https://hostname.com/delivery/api/public/v1/autenticacao/reativacao
 ```
 
-#  📱Métodos de Pedido
+#  📱Metodos de Pedido
 ```
 # Cliente realiza um Pedido
 Para um cliente realizar um pedido deve seguir estes passos:
@@ -129,7 +135,7 @@ Para deletar um pedido de um cliente existente siga estes passos:
 3. Deve retornar o status code 204 NO_CONTENT.
 ```
 
-#  📱Métodos de Entrega
+#  📱Metodos de Entrega
 ```
 # Entrega do Pedido é realizada
 Para realizar uma entrega deve seguir estes passos:
@@ -166,15 +172,15 @@ Para deletar a entrega de um pedido existente siga estes passos:
 2. Deve retornar o status code 204 NO_CONTENT.
 ```
 
-## ⚙️Tecnologias usadas
+## ⚙️Tecnologias utilizadas
 - Java
 - Maven Spring Boot
 - MongoDB
 
-# Próximos passos
-- Sistema de Produtos;
-- Calcular frete;
-- Adicionar rastreamento de entrega;
+# Proximos passos
+- Sistema de Produtos
+- Calcular frete
+- Adicionar rastreamento de entrega
 
-# Autor
+## Autor
 Manoel Mathias
