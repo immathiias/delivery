@@ -1,7 +1,7 @@
 package academy.wakanda.delivery.pedido.domain;
 
 import academy.wakanda.delivery.cliente.domain.Endereco;
-import academy.wakanda.delivery.pedido.application.api.PedidoRequest;
+import academy.wakanda.delivery.pedido.application.api.PedidoAlteracaoRequest;
 import academy.wakanda.delivery.pedido.application.api.PedidoRequestCriandoEndereco;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
@@ -30,8 +30,8 @@ public class Pedido {
     @NotBlank
     private Endereco enderecoEntrega;
 
-    private LocalDateTime dataHoraCriacaoDoPedido;
-    private LocalDateTime dataHoraAtuzaliacaoDoPedido;
+    private LocalDateTime dataHoraDoPedido;
+    private LocalDateTime dataHoraAlteracaoDoPedido;
 
     public Pedido(UUID idCliente, PedidoRequestCriandoEndereco pedidoRequest, Endereco endereco) {
         this.idPedido = UUID.randomUUID();
@@ -40,6 +40,13 @@ public class Pedido {
         this.detalhesPedido = pedidoRequest.getDetalhesPedido();
         this.enderecoEntrega = endereco;
 
-        this.dataHoraCriacaoDoPedido = LocalDateTime.now();
+        this.dataHoraDoPedido = LocalDateTime.now();
+    }
+
+    public void altera(PedidoAlteracaoRequest pedidoAlteracaoRequest) {
+        this.produto = pedidoAlteracaoRequest.getProduto();
+        this.detalhesPedido = pedidoAlteracaoRequest.getDetalhesPedido();
+
+        this.dataHoraAlteracaoDoPedido = LocalDateTime.now();
     }
 }
