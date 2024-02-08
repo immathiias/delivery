@@ -2,9 +2,11 @@ package academy.wakanda.delivery.cliente.infra;
 
 import academy.wakanda.delivery.cliente.application.repository.ClienteRepository;
 import academy.wakanda.delivery.cliente.domain.Cliente;
+import academy.wakanda.delivery.handler.APIException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class ClienteInfraRepository implements ClienteRepository {
         try {
             clienteMongoSpringRepository.save(cliente);
         } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("Existem dados duplicados.");
+            throw APIException.build(HttpStatus.BAD_REQUEST, "Existem dados duplicados.");
         }
         log.info("[finaliza] ClienteInfraRepository - salva");
         return cliente;
@@ -40,7 +42,7 @@ public class ClienteInfraRepository implements ClienteRepository {
     public Cliente buscaClientePorId(UUID idCliente) {
         log.info("[inicia] ClienteInfraRepository - buscaClientePorId");
         Cliente cliente = clienteMongoSpringRepository.findById(idCliente)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
+                .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Cliente não encontrado."));
         log.info("[finaliza] ClienteInfraRepository - buscaClientePorId");
         return cliente;
     }
@@ -49,7 +51,7 @@ public class ClienteInfraRepository implements ClienteRepository {
     public Cliente buscaClientePorEmail(String clienteEmail) {
         log.info("[inicia] ClienteInfraRepository - buscaClientePorEmail");
         Cliente cliente = clienteMongoSpringRepository.findByEmail(clienteEmail)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
+                .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Cliente não encontrado."));
         log.info("[finaliza] ClienteInfraRepository - buscaClientePorEmail");
         return cliente;
     }

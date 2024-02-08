@@ -3,6 +3,7 @@ package academy.wakanda.delivery.config.security.service;
 import java.util.Optional;
 
 import academy.wakanda.delivery.credencial.application.repository.CredencialRepository;
+import academy.wakanda.delivery.handler.APIException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +26,6 @@ public class AutenticacaoSecurityService implements UserDetailsService {
         log.info("[inicia] AutenticacaoSecurityService - buscando credencial pelo usuario");
         var credencial = credencialRepository.buscaCredencialPorEmail(email);
         log.info("[finaliza] AutenticacaoSecurityService - buscando credencial pelo usuario");
-        return Optional.ofNullable(credencial).orElseThrow(() -> new RuntimeException("Não existe credencial para o Email informado!"));
+        return Optional.ofNullable(credencial).orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Não existe credencial para o Email informado!"));
     }
 }

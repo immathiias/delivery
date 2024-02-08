@@ -2,6 +2,8 @@ package academy.wakanda.delivery.autenticacao.application.api;
 
 import academy.wakanda.delivery.autenticacao.application.service.AutenticacaoService;
 import academy.wakanda.delivery.config.security.domain.ValidaConteudoAuthorizationHeader;
+import academy.wakanda.delivery.handler.APIException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 
 import java.util.Optional;
@@ -37,7 +39,7 @@ public class AutenticacaoController implements AutenticacaoAPI {
 
     private String validaTokenExpirado(Optional<String> tokenExpirado) {
         String tokenExp = tokenExpirado.filter(new ValidaConteudoAuthorizationHeader())
-                .orElseThrow(() -> new RuntimeException("Token Invalido!"));
+                .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Token inválido!"));
         return tokenExp.substring(7, tokenExp.length());
     }
 

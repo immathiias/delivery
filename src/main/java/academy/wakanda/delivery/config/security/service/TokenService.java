@@ -6,6 +6,7 @@ import java.time.ZoneOffset;
 import java.util.Optional;
 
 import academy.wakanda.delivery.credencial.domain.Credencial;
+import academy.wakanda.delivery.handler.APIException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -24,10 +25,10 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-
     public String gerarToken(Authentication authentication) {
         return gerarToken((Credencial) authentication.getPrincipal());
     }
+
     public String gerarToken(Credencial credencial) {
         try {
             log.info("[inicia] TokenService - criação de token");
@@ -37,7 +38,7 @@ public class TokenService {
             log.info("[finaliza] TokenService - criação de token");
             return token;
         } catch (JWTCreationException ex) {
-            throw new RuntimeException("Erro ao gerar o token.");
+            throw APIException.build(HttpStatus.BAD_REQUEST, "Erro ao gerar o token.");
         }
     }
 
@@ -51,7 +52,7 @@ public class TokenService {
                     .verify(tokenExtraido)
                     .getSubject();
         } catch (JWTVerificationException e) {
-            throw new RuntimeException("O Token enviado está inválido. Tente novamente.");
+            throw APIException.build(HttpStatus.FORBIDDEN, "O Token enviado está inválido. Tente novamente.");
         }
     }
 
@@ -65,7 +66,7 @@ public class TokenService {
                     .getSubject();
         } catch (JWTVerificationException exception){
             exception.printStackTrace();
-            throw new RuntimeException("O token está inválido ou expirado.");
+            throw APIException.build(HttpStatus.FORBIDDEN, "O token está inválido ou expirado.");
 
         }
     }
