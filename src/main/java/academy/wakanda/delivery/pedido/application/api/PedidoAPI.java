@@ -23,6 +23,16 @@ public interface PedidoAPI {
 
     @GetMapping("/{idCliente}/pedido/{idPedido}")
     @ResponseStatus(code = HttpStatus.OK)
-    PedidoDetalhadoCliente getPedidoDoClientePorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable UUID idCliente, @PathVariable UUID idPedido);
+    PedidoDetalhadoCliente getPedidoDoClientePorId(
+            @RequestHeader(name = "Authorization", required = true) String token,
+            @PathVariable UUID idCliente,
+            @PathVariable UUID idPedido);
 
+    @PatchMapping("/{idCliente}/pedido/{idPedido}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void patchPedidoDoClientePorId(
+            @RequestHeader(name = "Authorization", required = true) String token,
+            @PathVariable UUID idCliente,
+            @PathVariable UUID idPedido,
+            @RequestBody PedidoAlteracaoRequest pedidoAlteracaoRequest);
 }

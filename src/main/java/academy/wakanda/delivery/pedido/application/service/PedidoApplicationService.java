@@ -72,4 +72,18 @@ public class PedidoApplicationService implements PedidoService {
         log.info("[finaliza] PedidoApplicationService - buscaPedidoDoClientePorId");
         return new PedidoDetalhadoCliente(pedido);
     }
+
+    @Override
+    public void alteraPedidoDoClientePorId(String token, UUID idCliente, UUID idPedido, PedidoAlteracaoRequest pedidoAlteracaoRequest) {
+        log.info("[inicia] PedidoApplicationService - alteraPedidoDoClientePorId");
+        String clienteEmail = tokenService.getEmailByBearerToken(token)
+                .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Cliente não encontrado."));
+        Cliente cliente = clienteRepository.buscaClientePorEmail(clienteEmail);
+        cliente.validaCliente(idCliente);
+
+        Pedido pedido = pedidoRepository.buscaPedidoDoClientePorId(idCliente, idPedido);
+        pedido.altera(pedidoAlteracaoRequest);
+        pedidoRepository.salvaPedido(pedido);
+        log.info("[finaliza] PedidoApplicationService - alteraPedidoDoClientePorId");
+    }
 }
