@@ -42,7 +42,7 @@ public class ClienteInfraRepository implements ClienteRepository {
     public Cliente buscaClientePorId(UUID idCliente) {
         log.info("[inicia] ClienteInfraRepository - buscaClientePorId");
         Cliente cliente = clienteMongoSpringRepository.findById(idCliente)
-                .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Cliente não encontrado."));
+                .orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
         log.info("[finaliza] ClienteInfraRepository - buscaClientePorId");
         return cliente;
     }
@@ -51,7 +51,7 @@ public class ClienteInfraRepository implements ClienteRepository {
     public Cliente buscaClientePorEmail(String clienteEmail) {
         log.info("[inicia] ClienteInfraRepository - buscaClientePorEmail");
         Cliente cliente = clienteMongoSpringRepository.findByEmail(clienteEmail)
-                .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Cliente não encontrado."));
+                .orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
         log.info("[finaliza] ClienteInfraRepository - buscaClientePorEmail");
         return cliente;
     }

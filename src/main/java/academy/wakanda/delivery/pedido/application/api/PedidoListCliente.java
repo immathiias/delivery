@@ -3,7 +3,6 @@ package academy.wakanda.delivery.pedido.application.api;
 import academy.wakanda.delivery.pedido.domain.Pedido;
 import lombok.Value;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -21,4 +21,8 @@ public interface PedidoAPI {
     @ResponseStatus(code = HttpStatus.OK)
     List<PedidoListCliente> getTodosPedidosDoCliente(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable UUID idCliente);
 
+    @GetMapping("/{idCliente}/pedido/{idPedido}")
+    @ResponseStatus(code = HttpStatus.OK)
+    PedidoDetalhadoCliente getPedidoDoClientePorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable UUID idCliente, @PathVariable UUID idPedido);
+
 }

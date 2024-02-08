@@ -7,10 +7,7 @@ import academy.wakanda.delivery.cliente.domain.Cliente;
 import academy.wakanda.delivery.cliente.domain.Endereco;
 import academy.wakanda.delivery.config.security.service.TokenService;
 import academy.wakanda.delivery.handler.APIException;
-import academy.wakanda.delivery.pedido.application.api.PedidoListCliente;
-import academy.wakanda.delivery.pedido.application.api.PedidoRequest;
-import academy.wakanda.delivery.pedido.application.api.PedidoRequestCriandoEndereco;
-import academy.wakanda.delivery.pedido.application.api.PedidoResponse;
+import academy.wakanda.delivery.pedido.application.api.*;
 import academy.wakanda.delivery.pedido.application.repository.PedidoRepository;
 import academy.wakanda.delivery.pedido.domain.Pedido;
 import lombok.RequiredArgsConstructor;
@@ -55,11 +52,24 @@ public class PedidoApplicationService implements PedidoService {
         log.info("[inicia] PedidoApplicationService - buscaTodosPedidosDoCliente");
         String clienteEmail = tokenService.getEmailByBearerToken(token)
                 .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Cliente não encontrado."));
-
         Cliente cliente = clienteRepository.buscaClientePorEmail(clienteEmail);
         cliente.validaCliente(idCliente);
         List<Pedido> pedidosDoCliente = pedidoRepository.buscaTodosPedidosDoCliente(idCliente);
         log.info("[finaliza] PedidoApplicationService - buscaTodosPedidosDoCliente");
         return PedidoListCliente.converte(pedidosDoCliente);
+    }
+
+    @Override
+    public PedidoDetalhadoCliente buscaPedidoDoClientePorId(String token, UUID idCliente, UUID idPedido) {
+        log.info("[inicia] PedidoApplicationService - buscaPedidoDoClientePorId");
+        String clienteEmail = tokenService.getEmailByBearerToken(token)
+                .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Cliente não encontrado."));
+        Cliente cliente = clienteRepository.buscaClientePorEmail(clienteEmail);
+        cliente.validaCliente(idCliente);
+
+        Pedido pedido = pedidoRepository.buscaPedidoDoClientePorId(idCliente, idPedido);
+
+        log.info("[finaliza] PedidoApplicationService - buscaPedidoDoClientePorId");
+        return new PedidoDetalhadoCliente(pedido);
     }
 }
