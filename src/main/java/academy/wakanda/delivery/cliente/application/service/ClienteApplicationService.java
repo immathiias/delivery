@@ -53,8 +53,9 @@ public class ClienteApplicationService implements ClienteService {
     @Override
     public void atualizaClientePorId(String token, UUID idCliente, ClienteAlteracaoRequest clienteAlteracaoRequest) {
         log.info("[inicia] ClienteApplicationService - atualizaClientePorId");
-        tokenService.validarToken(token);
-        Cliente cliente = clienteRepository.buscaClientePorId(idCliente);
+        String clienteEmail = tokenService.validarToken(token);
+        Cliente cliente = clienteRepository.buscaClientePorEmail(clienteEmail);
+        cliente.validaCliente(idCliente);
         cliente.altera(clienteAlteracaoRequest);
         clienteRepository.salva(cliente);
         log.info("[finaliza] ClienteApplicationService - atualizaClientePorId");
