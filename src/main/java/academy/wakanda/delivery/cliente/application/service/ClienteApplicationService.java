@@ -55,9 +55,8 @@ public class ClienteApplicationService implements ClienteService {
     @Override
     public void atualizaClientePorId(String token, UUID idCliente, ClienteAlteracaoRequest clienteAlteracaoRequest) {
         log.info("[inicia] ClienteApplicationService - atualizaClientePorId");
-        String clienteEmail = tokenService.validarToken(token);
-        Cliente cliente = clienteRepository.buscaClientePorEmail(clienteEmail);
-        cliente.validaCliente(idCliente);
+        Cliente cliente = checaCliente(token, idCliente);
+
         cliente.altera(clienteAlteracaoRequest);
         clienteRepository.salva(cliente);
         log.info("[finaliza] ClienteApplicationService - atualizaClientePorId");
@@ -84,11 +83,18 @@ public class ClienteApplicationService implements ClienteService {
     @Override
     public void deletaClientePorId(String token, UUID idCliente) {
         log.info("[inicia] ClienteApplicationService - deletaClientePorId");
-        String clienteEmail = tokenService.getEmailByBearerToken(token)
-                .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Cliente não encontrado!"));
-        Cliente cliente = clienteRepository.buscaClientePorEmail(clienteEmail);
-        cliente.validaCliente(idCliente);
+        Cliente cliente = checaCliente(token, idCliente);
+
         clienteRepository.deletaCliente(cliente);
         log.info("[finaliza] ClienteApplicationService - deletaClientePorId");
+    }
+
+    @Override
+    public Cliente checaCliente(String token, UUID idCliente) {
+        String clienteEmail = tokenService.getEmailByBearerToken(token)
+                .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Cliente não encontrado."));
+        Cliente cliente = clienteRepository.buscaClientePorEmail(clienteEmail);
+        cliente.validaCliente(idCliente);
+        return cliente;
     }
 }

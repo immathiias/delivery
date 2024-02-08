@@ -3,14 +3,10 @@ package academy.wakanda.delivery.cliente.domain;
 import academy.wakanda.delivery.cliente.application.api.ClienteAlteracaoRequest;
 import academy.wakanda.delivery.cliente.application.api.ClienteRequest;
 import academy.wakanda.delivery.handler.APIException;
-import academy.wakanda.delivery.pedido.application.api.PedidoRequest;
 import academy.wakanda.delivery.pedido.domain.Pedido;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -77,4 +72,5 @@ public class Cliente {
         }
         this.enderecos.add(endereco);
     }
+
 }

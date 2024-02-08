@@ -48,4 +48,11 @@ public class PedidoInfraRepository implements PedidoRepository {
         log.info("[finaliza] PedidoInfraRepository - buscaPedidoDoClientePorId");
         return pedido;
     }
+
+    @Override
+    public void deletaPedido(Pedido pedido) {
+        log.info("[inicia] PedidoInfraRepository - deletaPedido");
+        pedidoMongoSpringRepository.delete(pedido);
+        log.info("[finaliza] PedidoInfraRepository - deletaPedido");
+    }
 }

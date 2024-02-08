@@ -35,4 +35,13 @@ public interface PedidoAPI {
             @PathVariable UUID idCliente,
             @PathVariable UUID idPedido,
             @RequestBody PedidoAlteracaoRequest pedidoAlteracaoRequest);
+
+    @DeleteMapping("/{idCliente}/pedido/{idPedido}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void deletePedidoDoClientePorId(
+            @RequestHeader(name = "Authorization", required = true) String token,
+            @PathVariable UUID idCliente,
+            @PathVariable UUID idPedido);
+
+
 }

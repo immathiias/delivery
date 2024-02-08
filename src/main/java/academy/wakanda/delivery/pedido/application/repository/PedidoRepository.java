@@ -9,4 +9,5 @@ public interface PedidoRepository {
     Pedido salvaPedido(Pedido pedido);
     List<Pedido> buscaTodosPedidosDoCliente(UUID idCliente);
     Pedido buscaPedidoDoClientePorId(UUID idCliente, UUID idPedido);
+    void deletaPedido(Pedido pedido);
 }
