@@ -21,14 +21,14 @@ public interface PedidoAPI {
     @ResponseStatus(code = HttpStatus.OK)
     List<PedidoListCliente> getTodosPedidosDoCliente(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable UUID idCliente);
 
-    @GetMapping("/{idCliente}/pedido/{idPedido}")
+    @GetMapping("/{idCliente}/{idPedido}")
     @ResponseStatus(code = HttpStatus.OK)
     PedidoDetalhadoCliente getPedidoDoClientePorId(
             @RequestHeader(name = "Authorization", required = true) String token,
             @PathVariable UUID idCliente,
             @PathVariable UUID idPedido);
 
-    @PatchMapping("/{idCliente}/pedido/{idPedido}")
+    @PatchMapping("/{idCliente}/{idPedido}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     void patchPedidoDoClientePorId(
             @RequestHeader(name = "Authorization", required = true) String token,
@@ -36,7 +36,7 @@ public interface PedidoAPI {
             @PathVariable UUID idPedido,
             @RequestBody PedidoAlteracaoRequest pedidoAlteracaoRequest);
 
-    @DeleteMapping("/{idCliente}/pedido/{idPedido}")
+    @DeleteMapping("/{idCliente}/{idPedido}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     void deletePedidoDoClientePorId(
             @RequestHeader(name = "Authorization", required = true) String token,
