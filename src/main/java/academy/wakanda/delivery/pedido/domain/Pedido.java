@@ -30,7 +30,7 @@ public class Pedido {
     @NotBlank
     private Endereco enderecoEntrega;
 
-    private LocalDateTime dataHoraCriacaoDoPedido;
+    private LocalDateTime dataHoraDoPedido;
     private LocalDateTime dataHoraAtuzaliacaoDoPedido;
 
     public Pedido(UUID idCliente, PedidoRequestCriandoEndereco pedidoRequest, Endereco endereco) {
@@ -40,6 +40,6 @@ public class Pedido {
         this.detalhesPedido = pedidoRequest.getDetalhesPedido();
         this.enderecoEntrega = endereco;
 
-        this.dataHoraCriacaoDoPedido = LocalDateTime.now();
+        this.dataHoraDoPedido = LocalDateTime.now();
     }
 }

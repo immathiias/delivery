@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -28,5 +29,13 @@ public class PedidoInfraRepository implements PedidoRepository {
         }
         log.info("[finaliza] PedidoInfraRepository - salvaPedido");
         return pedido;
+    }
+
+    @Override
+    public List<Pedido> buscaTodosPedidosDoCliente(UUID idCliente) {
+        log.info("[inicia] PedidoInfraRepository - buscaTodosPedidosDoCliente");
+        List<Pedido> pedidosDoCliente = pedidoMongoSpringRepository.findAllByIdCliente(idCliente);
+        log.info("[finaliza] PedidoInfraRepository - buscaTodosPedidosDoCliente");
+        return pedidosDoCliente;
     }
 }

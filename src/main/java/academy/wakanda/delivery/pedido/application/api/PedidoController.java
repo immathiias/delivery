@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @Validated
@@ -21,5 +22,13 @@ public class PedidoController implements PedidoAPI {
         PedidoResponse pedido = pedidoService.clienteRealizaPedidoCriandoEndereco(token, idCliente, pedidoRequest);
         log.info("[finaliza] PedidoController - postClienteRealizaPedido");
         return pedido;
+    }
+
+    @Override
+    public List<PedidoListCliente> getTodosPedidosDoCliente(String token, UUID idCliente) {
+        log.info("[inicia] PedidoController - getTodosPedidosDoCliente");
+        List<PedidoListCliente> pedidos = pedidoService.buscaTodosPedidosDoCliente(token, idCliente);
+        log.info("[finaliza] PedidoController - getTodosPedidosDoCliente");
+        return pedidos;
     }
 }
