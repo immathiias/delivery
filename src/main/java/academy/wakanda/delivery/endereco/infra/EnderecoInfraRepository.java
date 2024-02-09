@@ -19,7 +19,7 @@ public class EnderecoInfraRepository implements EnderecoRepository {
     private final EnderecoMongoSpringRepository enderecoMongoSpringRepository;
 
     @Override
-    public Endereco criaEndereco(Endereco endereco) {
+    public Endereco salvaEndereco(Endereco endereco) {
         log.info("[inicia] EnderecoInfraRepository criaEndereco");
         try {
             enderecoMongoSpringRepository.save(endereco);

@@ -1,5 +1,6 @@
 package academy.wakanda.delivery.endereco.domain;
 
+import academy.wakanda.delivery.endereco.application.api.EnderecoAlteracaoRequest;
 import academy.wakanda.delivery.endereco.application.api.EnderecoRequest;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -40,5 +41,14 @@ public class Endereco {
         this.numero = enderecoRequest.getNumero();
         this.complemento = enderecoRequest.getComplemento();
         this.pontoReferencia = enderecoRequest.getPontoReferencia();
+    }
+
+    public void altera(EnderecoAlteracaoRequest enderecoAlteracaoRequest) {
+        this.estado = enderecoAlteracaoRequest.getEstado();
+        this.cidade = enderecoAlteracaoRequest.getCidade();
+        this.rua = enderecoAlteracaoRequest.getRua();
+        this.numero = enderecoAlteracaoRequest.getNumero();
+        this.complemento = enderecoAlteracaoRequest.getComplemento();
+        this.pontoReferencia = enderecoAlteracaoRequest.getPontoReferencia();
     }
 }

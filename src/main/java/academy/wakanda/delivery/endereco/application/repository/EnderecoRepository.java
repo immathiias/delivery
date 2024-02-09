@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface EnderecoRepository {
-    Endereco criaEndereco(Endereco endereco);
+    Endereco salvaEndereco(Endereco endereco);
     List<Endereco> buscaTodosEnderecosDoCliente(UUID idCliente);
     Endereco buscaEnderecoDoClientePorId(UUID idCliente, UUID idEndereco);
 }

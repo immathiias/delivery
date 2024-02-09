@@ -29,4 +29,12 @@ public interface EnderecoAPI {
             @RequestHeader(name = "Authorization", required = true) String token,
             @PathVariable UUID idCliente,
             @PathVariable UUID idEndereco);
+
+    @PatchMapping("/{idCliente}/{idEndereco}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void patchEnderecoDoClientePorId(
+            @RequestHeader(name = "Authorization", required = true) String token,
+            @PathVariable UUID idCliente,
+            @PathVariable UUID idEndereco,
+            @RequestBody EnderecoAlteracaoRequest enderecoAlteracaoRequest);
 }

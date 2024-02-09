@@ -43,4 +43,11 @@ public class EnderecoController implements EnderecoAPI {
         log.info("[finaliza] EnderecoController - getEnderecoDoClientePorId");
         return endereco;
     }
+
+    @Override
+    public void patchEnderecoDoClientePorId(String token, UUID idCliente, UUID idEndereco, EnderecoAlteracaoRequest enderecoAlteracaoRequest) {
+        log.info("[inicia] EnderecoController - patchEnderecoDoClientePorId");
+        enderecoService.alteraEnderecoDoClientePorId(token, idCliente, idEndereco, enderecoAlteracaoRequest);
+        log.info("[finaliza] EnderecoController - patchEnderecoDoClientePorId");
+    }
 }
