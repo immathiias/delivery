@@ -3,7 +3,6 @@ package academy.wakanda.delivery.cliente.domain;
 import academy.wakanda.delivery.cliente.application.api.ClienteAlteracaoRequest;
 import academy.wakanda.delivery.cliente.application.api.ClienteRequest;
 import academy.wakanda.delivery.handler.APIException;
-import academy.wakanda.delivery.pedido.domain.Pedido;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -33,7 +32,6 @@ public class Cliente {
     @NotBlank
     private String telefone;
     private List<Endereco> enderecos;
-    private List<Pedido> pedidos;
 
     private LocalDateTime dataHoraDoCadastro;
     private LocalDateTime dataHoraUltimaAlteracao;
@@ -57,13 +55,6 @@ public class Cliente {
         if (!this.idCliente.equals(idCliente)) {
             throw APIException.build(HttpStatus.UNAUTHORIZED, "Credencial de autenticação não é válida!");
         }
-    }
-
-    public void adicionaPedido(Pedido pedido) {
-        if (this.pedidos == null) {
-            this.pedidos = new ArrayList<>();
-        }
-        this.pedidos.add(pedido);
     }
 
     public void adicionaEndereco(Endereco endereco) {

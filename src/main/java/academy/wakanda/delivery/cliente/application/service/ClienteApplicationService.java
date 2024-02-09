@@ -7,6 +7,8 @@ import academy.wakanda.delivery.cliente.domain.Endereco;
 import academy.wakanda.delivery.config.security.service.TokenService;
 import academy.wakanda.delivery.credencial.application.service.CredencialService;
 import academy.wakanda.delivery.handler.APIException;
+import academy.wakanda.delivery.pedido.application.repository.PedidoRepository;
+import academy.wakanda.delivery.pedido.application.service.PedidoService;
 import academy.wakanda.delivery.pedido.domain.Pedido;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +24,7 @@ import java.util.UUID;
 public class ClienteApplicationService implements ClienteService {
 
     private final ClienteRepository clienteRepository;
+    private final PedidoRepository pedidoRepository;
     private final CredencialService credencialService;
     private final TokenService tokenService;
 
@@ -48,8 +51,9 @@ public class ClienteApplicationService implements ClienteService {
     public ClienteDetalhadoResponse buscaClientePorId(UUID idCliente) {
         log.info("[inicia] ClienteApplicationService - buscaClientePorId");
         Cliente cliente = clienteRepository.buscaClientePorId(idCliente);
+        List<Pedido> pedidos = pedidoRepository.buscaTodosPedidosDoCliente(idCliente);
         log.info("[finaliza] ClienteApplicationService - buscaClientePorId");
-        return new ClienteDetalhadoResponse(cliente);
+        return new ClienteDetalhadoResponse(cliente, pedidos);
     }
 
     @Override
@@ -66,16 +70,8 @@ public class ClienteApplicationService implements ClienteService {
     public void adicionaEnderecoCliente(UUID idCliente, EnderecoRequest enderecoRequest) {
         log.info("[inicia] ClienteApplicationService - adicionaEnderecoEPedidoCliente");
         Cliente cliente = clienteRepository.buscaClientePorId(idCliente);
-        cliente.adicionaEndereco(new Endereco(enderecoRequest));
-        clienteRepository.salva(cliente);
-        log.info("[finaliza] ClienteApplicationService - adicionaEnderecoEPedidoCliente");
-    }
 
-    @Override
-    public void adicionaEnderecoEPedidoCliente(Cliente cliente, Pedido pedido, EnderecoRequest enderecoRequest) {
-        log.info("[inicia] ClienteApplicationService - adicionaEnderecoEPedidoCliente");
         cliente.adicionaEndereco(new Endereco(enderecoRequest));
-        cliente.adicionaPedido(pedido);
         clienteRepository.salva(cliente);
         log.info("[finaliza] ClienteApplicationService - adicionaEnderecoEPedidoCliente");
     }
