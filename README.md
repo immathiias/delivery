@@ -141,11 +141,9 @@ Para deletar um pedido de um cliente existente siga estes passos:
 Para realizar uma entrega deve seguir estes passos:
 
 1. É necessário o pedido estar atribuido a um cliente;
-2. Utilizar a seguinte URL com o método POST:
+2. Utilizar a seguinte URL com o método PATCH:
 - https://hostname.com/delivery/api/v1/pedido/entrega/{idCliente}/{idPedido}
-3. Enviar na requisição um body com as seguintes informações:
-- dataHoraDaEntrega;
-4. Deve retornar o status code 201 CREATED.
+3. Deve retornar o status code 204 NO_CONTENT.
 
 # Verificar horário que um Pedido foi entregue
 Para verificar o horário que o pedido foi entregue siga estes passos:

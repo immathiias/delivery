@@ -1,6 +1,7 @@
 package academy.wakanda.delivery.pedido.domain;
 
 import academy.wakanda.delivery.cliente.domain.Endereco;
+import academy.wakanda.delivery.handler.APIException;
 import academy.wakanda.delivery.pedido.application.api.PedidoAlteracaoRequest;
 import academy.wakanda.delivery.pedido.application.api.PedidoRequestCriandoEndereco;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -29,6 +31,7 @@ public class Pedido {
     private String detalhesPedido;
     @NotBlank
     private Endereco enderecoEntrega;
+    private Entrega entrega;
 
     private LocalDateTime dataHoraDoPedido;
     private LocalDateTime dataHoraAlteracaoDoPedido;
@@ -39,6 +42,7 @@ public class Pedido {
         this.produto = pedidoRequest.getProduto();
         this.detalhesPedido = pedidoRequest.getDetalhesPedido();
         this.enderecoEntrega = endereco;
+        this.entrega = new Entrega(false, null);
 
         this.dataHoraDoPedido = LocalDateTime.now();
     }
@@ -48,5 +52,18 @@ public class Pedido {
         this.detalhesPedido = pedidoAlteracaoRequest.getDetalhesPedido();
 
         this.dataHoraAlteracaoDoPedido = LocalDateTime.now();
+    }
+
+    public void realizaEntrega() {
+        checaEntrega();
+        this.entrega.setPedidoEntregue(true);
+        this.entrega.setDataHoraDaEntrega(LocalDateTime.now());
+    }
+
+    public Boolean checaEntrega() {
+        if (this.entrega.getPedidoEntregue()) {
+            throw APIException.build(HttpStatus.BAD_REQUEST, "O pedido já foi entregue.");
+        }
+        return false;
     }
 }

@@ -36,6 +36,13 @@ public interface PedidoAPI {
             @PathVariable UUID idPedido,
             @RequestBody PedidoAlteracaoRequest pedidoAlteracaoRequest);
 
+    @PatchMapping("/entrega/{idCliente}/{idPedido}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void patchEntregaPedidoDoCliente(
+            @RequestHeader(name = "Authorization", required = true) String token,
+            @PathVariable UUID idCliente,
+            @PathVariable UUID idPedido);
+
     @DeleteMapping("/{idCliente}/{idPedido}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     void deletePedidoDoClientePorId(
