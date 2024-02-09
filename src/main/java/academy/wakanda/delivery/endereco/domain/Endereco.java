@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
@@ -13,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@CompoundIndex(name = "endereco_index", def = "{'rua' : 1, 'numero' : 1}", unique = true)
 @Document(collection = "Endereco")
 public class Endereco {
     @Id
@@ -26,11 +27,8 @@ public class Endereco {
     @NotBlank
     private String rua;
     @NotNull
-    @Indexed(unique = true)
     private Integer numero;
-    @Indexed(unique = true)
     private String complemento;
-    @Indexed(unique = true)
     private String pontoReferencia;
 
     public Endereco(UUID idCliente, EnderecoRequest enderecoRequest) {

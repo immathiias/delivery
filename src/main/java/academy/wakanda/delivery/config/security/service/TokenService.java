@@ -64,10 +64,9 @@ public class TokenService {
                     .build()
                     .verify(token)
                     .getSubject();
-        } catch (JWTVerificationException exception){
-            exception.printStackTrace();
+        } catch (JWTVerificationException e){
+            e.printStackTrace();
             throw APIException.build(HttpStatus.FORBIDDEN, "O token está inválido ou expirado.");
-
         }
     }
 

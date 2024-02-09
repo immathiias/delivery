@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @Validated
@@ -25,5 +26,13 @@ public class EnderecoController implements EnderecoAPI {
         EnderecoResponse endereco = enderecoService.adicionaEnderecoCliente(idCliente, enderecoRequest);;
         log.info("[finaliza] EnderecoController - postEndereco");
         return endereco;
+    }
+
+    @Override
+    public List<EnderecoListResponse> getTodosEnderecoDoCliente(String token, UUID idCliente) {
+        log.info("[inicia] EnderecoController - getTodosEnderecoDoCliente");
+        List<EnderecoListResponse> enderecos = enderecoService.buscaTodosEnderecosDoCliente(token, idCliente);
+        log.info("[finaliza] EnderecoController - getTodosEnderecoDoCliente");
+        return enderecos;
     }
 }

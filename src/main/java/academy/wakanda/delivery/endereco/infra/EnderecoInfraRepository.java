@@ -1,6 +1,5 @@
 package academy.wakanda.delivery.endereco.infra;
 
-import academy.wakanda.delivery.endereco.application.api.EnderecoRequest;
 import academy.wakanda.delivery.endereco.application.repository.EnderecoRepository;
 import academy.wakanda.delivery.endereco.domain.Endereco;
 import academy.wakanda.delivery.handler.APIException;
@@ -10,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -24,9 +24,17 @@ public class EnderecoInfraRepository implements EnderecoRepository {
         try {
             enderecoMongoSpringRepository.save(endereco);
         } catch (DataIntegrityViolationException e) {
-            throw APIException.build(HttpStatus.BAD_REQUEST, "Existem dados duplicados.");
+            throw APIException.build(HttpStatus.BAD_REQUEST, "Já existe um endereço com a mesma rua e número.");
         }
         log.info("[finaliza] EnderecoInfraRepository criaEndereco");
         return endereco;
+    }
+
+    @Override
+    public List<Endereco> buscaTodosEnderecosDoCliente(UUID idCliente) {
+        log.info("[inicia] EnderecoInfraRepository - buscaTodosEnderecosDoCliente");
+        List<Endereco> enderecosDoCliente = enderecoMongoSpringRepository.findAllByIdCliente(idCliente);
+        log.info("[finaliza] EnderecoInfraRepository - buscaTodosEnderecosDoCliente");
+        return enderecosDoCliente;
     }
 }
