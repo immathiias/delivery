@@ -37,4 +37,13 @@ public class EnderecoInfraRepository implements EnderecoRepository {
         log.info("[finaliza] EnderecoInfraRepository - buscaTodosEnderecosDoCliente");
         return enderecosDoCliente;
     }
+
+    @Override
+    public Endereco buscaEnderecoDoClientePorId(UUID idCliente, UUID idEndereco) {
+        log.info("[inicia] EnderecoInfraRepository - buscaEnderecoDoClientePorId");
+        Endereco endereco = enderecoMongoSpringRepository.findByIdClienteAndIdEndereco(idCliente, idEndereco)
+                .orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Endereço não encontrado."));
+        log.info("[finaliza] EnderecoInfraRepository - buscaEnderecoDoClientePorId");
+        return endereco;
+    }
 }

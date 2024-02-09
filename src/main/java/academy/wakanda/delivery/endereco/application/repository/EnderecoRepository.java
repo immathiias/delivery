@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface EnderecoRepository {
     Endereco criaEndereco(Endereco endereco);
     List<Endereco> buscaTodosEnderecosDoCliente(UUID idCliente);
+    Endereco buscaEnderecoDoClientePorId(UUID idCliente, UUID idEndereco);
 }

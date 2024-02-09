@@ -22,4 +22,11 @@ public interface EnderecoAPI {
     List<EnderecoListResponse> getTodosEnderecoDoCliente(
             @RequestHeader(name = "Authorization", required = true) String token,
             @PathVariable UUID idCliente);
+
+    @GetMapping("/{idCliente}/{idEndereco}")
+    @ResponseStatus(code = HttpStatus.OK)
+    EnderecoDetalhadoResponse getEnderecoDoClientePorId(
+            @RequestHeader(name = "Authorization", required = true) String token,
+            @PathVariable UUID idCliente,
+            @PathVariable UUID idEndereco);
 }

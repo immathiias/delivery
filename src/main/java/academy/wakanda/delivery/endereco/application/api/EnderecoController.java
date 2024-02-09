@@ -35,4 +35,12 @@ public class EnderecoController implements EnderecoAPI {
         log.info("[finaliza] EnderecoController - getTodosEnderecoDoCliente");
         return enderecos;
     }
+
+    @Override
+    public EnderecoDetalhadoResponse getEnderecoDoClientePorId(String token, UUID idCliente, UUID idEndereco) {
+        log.info("[inicia] EnderecoController - getEnderecoDoClientePorId");
+        EnderecoDetalhadoResponse endereco = enderecoService.buscaEnderecoDoClientePorId(token, idCliente, idEndereco);
+        log.info("[finaliza] EnderecoController - getEnderecoDoClientePorId");
+        return endereco;
+    }
 }

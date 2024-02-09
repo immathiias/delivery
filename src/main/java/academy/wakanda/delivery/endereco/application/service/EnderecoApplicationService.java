@@ -1,6 +1,7 @@
 package academy.wakanda.delivery.endereco.application.service;
 
 import academy.wakanda.delivery.cliente.application.service.ClienteService;
+import academy.wakanda.delivery.endereco.application.api.EnderecoDetalhadoResponse;
 import academy.wakanda.delivery.endereco.application.api.EnderecoListResponse;
 import academy.wakanda.delivery.endereco.application.api.EnderecoRequest;
 import academy.wakanda.delivery.endereco.application.api.EnderecoResponse;
@@ -39,5 +40,15 @@ public class EnderecoApplicationService implements EnderecoService {
         List<Endereco> enderecos = enderecoRepository.buscaTodosEnderecosDoCliente(idCliente);
         log.info("[finaliza] EnderecoApplicationService - buscaTodosEnderecosDoCliente");
         return EnderecoListResponse.converte(enderecos);
+    }
+
+    @Override
+    public EnderecoDetalhadoResponse buscaEnderecoDoClientePorId(String token, UUID idCliente, UUID idEndereco) {
+        log.info("[inicia] EnderecoApplicationService - buscaEnderecoDoClientePorId");
+        clienteService.checaCliente(token, idCliente);
+
+        Endereco endereco = enderecoRepository.buscaEnderecoDoClientePorId(idCliente, idEndereco);
+        log.info("[finaliza] EnderecoApplicationService - buscaEnderecoDoClientePorId");
+        return new EnderecoDetalhadoResponse(endereco);
     }
 }
