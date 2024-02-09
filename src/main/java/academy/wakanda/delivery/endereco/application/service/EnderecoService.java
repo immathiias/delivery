@@ -10,4 +10,5 @@ public interface EnderecoService {
     List<EnderecoListResponse> buscaTodosEnderecosDoCliente(String token, UUID idCliente);
     EnderecoDetalhadoResponse buscaEnderecoDoClientePorId(String token, UUID idCliente, UUID idEndereco);
     void alteraEnderecoDoClientePorId(String token, UUID idCliente, UUID idEndereco, EnderecoAlteracaoRequest enderecoAlteracaoRequest);
+    void deletaEnderecoDoClientePorId(String token, UUID idCliente, UUID idEndereco);
 }

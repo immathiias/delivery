@@ -10,4 +10,5 @@ public interface EnderecoRepository {
     Endereco salvaEndereco(Endereco endereco);
     List<Endereco> buscaTodosEnderecosDoCliente(UUID idCliente);
     Endereco buscaEnderecoDoClientePorId(UUID idCliente, UUID idEndereco);
+    void deletaEndereco(Endereco endereco);
 }

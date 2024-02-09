@@ -37,4 +37,11 @@ public interface EnderecoAPI {
             @PathVariable UUID idCliente,
             @PathVariable UUID idEndereco,
             @RequestBody EnderecoAlteracaoRequest enderecoAlteracaoRequest);
+
+    @DeleteMapping("/{idCliente}/{idEndereco}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    void deleteEnderecoDoClientePorId(
+            @RequestHeader(name = "Authorization", required = true) String token,
+            @PathVariable UUID idCliente,
+            @PathVariable UUID idEndereco);
 }

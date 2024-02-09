@@ -46,4 +46,11 @@ public class EnderecoInfraRepository implements EnderecoRepository {
         log.info("[finaliza] EnderecoInfraRepository - buscaEnderecoDoClientePorId");
         return endereco;
     }
+
+    @Override
+    public void deletaEndereco(Endereco endereco) {
+        log.info("[inicia] EnderecoInfraRepository - deletaEndereco");
+        enderecoMongoSpringRepository.delete(endereco);
+        log.info("[finaliza] EnderecoInfraRepository - deletaEndereco");
+    }
 }
