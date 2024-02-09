@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface CredencialMongoSpringRepository extends MongoRepository<Credencial, UUID> {
+public interface CredencialMongoSpringRepository extends MongoRepository<Credencial, String> {
     Optional<Credencial> findByEmail(String email);
 }
