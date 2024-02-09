@@ -6,6 +6,7 @@ Um projeto back-end para aplicativos de Delivery feito por Mathias.
 - <a href="#como-rodar-o-projeto">Como executar a aplicação</a>
 - <a href="#metodos-de-cliente">Métodos do Cliente</a>
 - <a href="#metodos-de-autenticacao">Métodos de Autenticação</a>
+- <a href="#metodos-de-endereco">Métodos de Endereço</a>
 - <a href="#metodos-de-pedido">Métodos de Pedido</a>
 - <a href="#metodos-de-entrega">Métodos de Entrega</a>
 - <a href="#tecnologias-utilizadas">Tecnologias utilizadas</a>
@@ -87,6 +88,53 @@ Para autenticar um cliente siga estes passos:
 - https://hostname.com/delivery/api/public/v1/autenticacao/reativacao
 ```
 
+#  📱Metodos de Endereco
+```
+# Cliente cria um Endereço
+Para um cliente criar um endereço deve seguir estes passos:
+
+1. É necessário o cliente estar logado;
+2. Utilizar a seguinte URL com o método POST:
+- https://hostname.com/delivery/api/v1/endereco/{idCliente}
+3. Enviar na requisição um body com as seguintes informações:
+- estado, cidade, rua, numero, complemento (opcional), pontoReferencia (opcional);
+4. Deve retornar o status code 201 CREATED.
+
+# Buscar todos os Endereços de um Cliente
+Para buscar todos os endereços de um cliente siga estes passos:
+
+1. É necessário o cliente estar logado;
+2. Utilizar a seguinte URL com o método GET:
+- https://hostname.com/delivery/api/v1/endereco/{idCliente}
+3. Deve retonar o status code 200 OK.
+
+# Buscar um Endereço de um Cliente através do ID
+Para buscar um endereço de um cliente atráves do ID siga estes passos:
+
+1. É necessário o cliente estar logado;
+3. Utilizar a seguinte URL com o método GET:
+- https://hostname.com/delivery/api/v1/endereco/{idCliente}/{idEndereco}
+4. Deve retonar o status code 200 OK.
+
+# Alterar um endereço de um cliente através do ID
+Para alterar um endereço de um cliente siga estes passos:
+
+1. É necessário o cliente estar logado;
+2. Utilizar a seguinte URL com o método PATCH:
+- https://hostname.com/delivery/api/v1/endereco/{idCliente}/{idEndereco}
+3. Pode alterar na requisição body as seguintes informações:
+- estado, cidade, rua, numero, complemento, pontoReferencia;
+4. Deve retornar o status code 204 NO_CONTENT.
+
+# Deletar um endereço de um endereço através do ID
+Para deletar um endereço de um cliente existente siga estes passos:
+
+1. É necessário o cliente estar logado;
+2. Utilizar a seguinte URL com o método DELETE:
+- https://hostname.com/delivery/api/v1/endereco/{idCliente}/{idEndereco}
+3. Deve retornar o status code 204 NO_CONTENT.
+```
+
 #  📱Metodos de Pedido
 ```
 # Cliente realiza um Pedido
@@ -153,20 +201,11 @@ Para verificar o horário que o pedido foi entregue siga estes passos:
 - https://hostname.com/delivery/api/v1/pedido/{idCliente}/{idPedido}
 2. Deve retonar o status code 200 OK.
 
-# Alterar uma entrega de um pedido
+# Retirar a entrega de um pedido
 Para alterar uma entrega de um pedido siga estes passos:
 
 1. Utilizar a seguinte URL com o método PATCH:
-- https://hostname.com/delivery/api/v1/pedido/entrega/{idCliente}/{idPedido}
-3. Pode alterar na requisição body as seguintes informações:
-- dataHoraDaEntrega;
-4. Deve retornar o status code 204 NO_CONTENT.
-
-# Deletar a entrega de um pedido
-Para deletar a entrega de um pedido existente siga estes passos:
-
-1. Utilizar a seguinte URL com o método DELETE:
-- https://hostname.com/delivery/api/v1/pedido/entrega/{idCliente}/{idPedido}
+- https://hostname.com/delivery/api/v1/pedido/retiraEntrega/{idCliente}/{idPedido}
 2. Deve retornar o status code 204 NO_CONTENT.
 ```
 

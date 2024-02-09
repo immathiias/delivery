@@ -3,12 +3,10 @@ package academy.wakanda.delivery.cliente.application.service;
 import academy.wakanda.delivery.cliente.application.api.*;
 import academy.wakanda.delivery.cliente.application.repository.ClienteRepository;
 import academy.wakanda.delivery.cliente.domain.Cliente;
-import academy.wakanda.delivery.cliente.domain.Endereco;
 import academy.wakanda.delivery.config.security.service.TokenService;
 import academy.wakanda.delivery.credencial.application.service.CredencialService;
 import academy.wakanda.delivery.handler.APIException;
 import academy.wakanda.delivery.pedido.application.repository.PedidoRepository;
-import academy.wakanda.delivery.pedido.application.service.PedidoService;
 import academy.wakanda.delivery.pedido.domain.Pedido;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -64,16 +62,6 @@ public class ClienteApplicationService implements ClienteService {
         cliente.altera(clienteAlteracaoRequest);
         clienteRepository.salva(cliente);
         log.info("[finaliza] ClienteApplicationService - atualizaClientePorId");
-    }
-
-    @Override
-    public void adicionaEnderecoCliente(UUID idCliente, EnderecoRequest enderecoRequest) {
-        log.info("[inicia] ClienteApplicationService - adicionaEnderecoEPedidoCliente");
-        Cliente cliente = clienteRepository.buscaClientePorId(idCliente);
-
-        cliente.adicionaEndereco(new Endereco(enderecoRequest));
-        clienteRepository.salva(cliente);
-        log.info("[finaliza] ClienteApplicationService - adicionaEnderecoEPedidoCliente");
     }
 
     @Override

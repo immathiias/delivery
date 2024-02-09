@@ -50,13 +50,6 @@ public class ClienteController implements ClienteAPI {
     }
 
     @Override
-    public void postEndereco(UUID idCliente, EnderecoRequest enderecoRequest) {
-        log.info("[inicia] ClienteController - postCliente");
-        clienteService.adicionaEnderecoCliente(idCliente, enderecoRequest);
-        log.info("[finaliza] ClienteController - postCliente");
-    }
-
-    @Override
     public void deleteClientePorId(String token, UUID idCliente) {
         log.info("[inicia] ClienteController - deleteClientePorId");
         clienteService.deletaClientePorId(token, idCliente);

@@ -1,7 +1,8 @@
 package academy.wakanda.delivery.pedido.application.service;
 
 import academy.wakanda.delivery.cliente.application.service.ClienteService;
-import academy.wakanda.delivery.cliente.domain.Endereco;
+import academy.wakanda.delivery.endereco.application.service.EnderecoService;
+import academy.wakanda.delivery.endereco.domain.Endereco;
 import academy.wakanda.delivery.pedido.application.api.*;
 import academy.wakanda.delivery.pedido.application.repository.PedidoRepository;
 import academy.wakanda.delivery.pedido.domain.Pedido;
@@ -18,16 +19,29 @@ import java.util.UUID;
 public class PedidoApplicationService implements PedidoService {
     private final PedidoRepository pedidoRepository;
     private final ClienteService clienteService;
+    private final EnderecoService enderecoService;
 
     @Override
     public PedidoResponse clienteRealizaPedidoCriandoEndereco(String token, UUID idCliente, PedidoRequestCriandoEndereco pedidoRequest) {
         log.info("[inicia] PedidoApplicationService - clienteRealizaPedido");
         clienteService.checaCliente(token, idCliente);
-        Endereco endereco = new Endereco(pedidoRequest.getEnderecoEntrega());
+        Endereco endereco = new Endereco(idCliente, pedidoRequest.getEnderecoEntrega());
 
-        Pedido pedido = pedidoRepository.salvaPedido(new Pedido(idCliente, pedidoRequest, endereco));
-        clienteService.adicionaEnderecoCliente(idCliente, pedidoRequest.getEnderecoEntrega());
+        Pedido pedido = pedidoRepository.salvaPedido(new Pedido(idCliente, pedidoRequest, endereco.getIdEndereco()));
+        enderecoService.adicionaEnderecoCliente(idCliente, pedidoRequest.getEnderecoEntrega());
+        log.info("[finaliza] PedidoApplicationService - clienteRealizaPedido");
+        return PedidoResponse.builder()
+                .idPedido(pedido.getIdPedido())
+                .idCliente(pedido.getIdCliente())
+                .build();
+    }
 
+    @Override
+    public PedidoResponse clienteRealizaPedido(String token, UUID idCliente, PedidoRequest pedidoRequest) {
+        log.info("[inicia] PedidoApplicationService - clienteRealizaPedido");
+        clienteService.checaCliente(token, idCliente);
+
+        Pedido pedido = pedidoRepository.salvaPedido(new Pedido(idCliente, pedidoRequest));
         log.info("[finaliza] PedidoApplicationService - clienteRealizaPedido");
         return PedidoResponse.builder()
                 .idPedido(pedido.getIdPedido())

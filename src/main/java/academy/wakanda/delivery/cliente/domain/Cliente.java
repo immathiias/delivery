@@ -31,7 +31,6 @@ public class Cliente {
     private String nome;
     @NotBlank
     private String telefone;
-    private List<Endereco> enderecos;
 
     private LocalDateTime dataHoraDoCadastro;
     private LocalDateTime dataHoraUltimaAlteracao;
@@ -56,12 +55,4 @@ public class Cliente {
             throw APIException.build(HttpStatus.UNAUTHORIZED, "Credencial de autenticação não é válida!");
         }
     }
-
-    public void adicionaEndereco(Endereco endereco) {
-        if (this.enderecos == null) {
-            this.enderecos = new ArrayList<>();
-        }
-        this.enderecos.add(endereco);
-    }
-
 }

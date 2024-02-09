@@ -18,8 +18,16 @@ public class PedidoController implements PedidoAPI {
 
     @Override
     public PedidoResponse postClienteRealizaPedidoCriandoEndereco(String token, UUID idCliente, PedidoRequestCriandoEndereco pedidoRequest) {
-        log.info("[inicia] PedidoController - postClienteRealizaPedido");
+        log.info("[inicia] PedidoController - postClienteRealizaPedidoCriandoEndereco");
         PedidoResponse pedido = pedidoService.clienteRealizaPedidoCriandoEndereco(token, idCliente, pedidoRequest);
+        log.info("[finaliza] PedidoController - postClienteRealizaPedidoCriandoEndereco");
+        return pedido;
+    }
+
+    @Override
+    public PedidoResponse postClienteRealizaPedido(String token, UUID idCliente, PedidoRequest pedidoRequest) {
+        log.info("[inicia] PedidoController - postClienteRealizaPedido");
+        PedidoResponse pedido = pedidoService.clienteRealizaPedido(token, idCliente, pedidoRequest);
         log.info("[finaliza] PedidoController - postClienteRealizaPedido");
         return pedido;
     }
