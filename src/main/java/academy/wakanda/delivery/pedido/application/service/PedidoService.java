@@ -11,5 +11,6 @@ public interface PedidoService {
     PedidoDetalhadoCliente buscaPedidoDoClientePorId(String token, UUID idCliente, UUID idPedido);
     void alteraPedidoDoClientePorId(String token, UUID idCliente, UUID idPedido, PedidoAlteracaoRequest pedidoAlteracaoRequest);
     void entregaPedidoDoCliente(String token, UUID idCliente, UUID idPedido);
+    void retiraEntregaPedidoDoCliente(String token, UUID idCliente, UUID idPedido);
     void deletaPedidoDoClientePorId(String token, UUID idCliente, UUID idPedido);
 }

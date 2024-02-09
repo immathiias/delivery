@@ -1,7 +1,6 @@
 package academy.wakanda.delivery.pedido.application.service;
 
 import academy.wakanda.delivery.cliente.application.service.ClienteService;
-import academy.wakanda.delivery.cliente.domain.Cliente;
 import academy.wakanda.delivery.cliente.domain.Endereco;
 import academy.wakanda.delivery.pedido.application.api.*;
 import academy.wakanda.delivery.pedido.application.repository.PedidoRepository;
@@ -23,11 +22,11 @@ public class PedidoApplicationService implements PedidoService {
     @Override
     public PedidoResponse clienteRealizaPedidoCriandoEndereco(String token, UUID idCliente, PedidoRequestCriandoEndereco pedidoRequest) {
         log.info("[inicia] PedidoApplicationService - clienteRealizaPedido");
-        Cliente cliente = clienteService.checaCliente(token, idCliente);
+        clienteService.checaCliente(token, idCliente);
         Endereco endereco = new Endereco(pedidoRequest.getEnderecoEntrega());
 
         Pedido pedido = pedidoRepository.salvaPedido(new Pedido(idCliente, pedidoRequest, endereco));
-        clienteService.adicionaEnderecoEPedidoCliente(cliente, pedido, pedidoRequest.getEnderecoEntrega());
+        clienteService.adicionaEnderecoCliente(idCliente, pedidoRequest.getEnderecoEntrega());
 
         log.info("[finaliza] PedidoApplicationService - clienteRealizaPedido");
         return PedidoResponse.builder()
@@ -77,6 +76,17 @@ public class PedidoApplicationService implements PedidoService {
         pedido.realizaEntrega();
         pedidoRepository.salvaPedido(pedido);
         log.info("[finaliza] PedidoApplicationService - entregaPedidoDoCliente");
+    }
+
+    @Override
+    public void retiraEntregaPedidoDoCliente(String token, UUID idCliente, UUID idPedido) {
+        log.info("[inicia] PedidoApplicationService - retiraEntregaPedidoDoCliente");
+        clienteService.checaCliente(token, idCliente);
+
+        Pedido pedido = pedidoRepository.buscaPedidoDoClientePorId(idCliente, idPedido);
+        pedido.retiraEntrega();
+        pedidoRepository.salvaPedido(pedido);
+        log.info("[finaliza] PedidoApplicationService - retiraEntregaPedidoDoCliente");
     }
 
     @Override

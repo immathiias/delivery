@@ -13,7 +13,6 @@ public interface ClienteService {
     ClienteDetalhadoResponse buscaClientePorId(UUID idCliente);
     void atualizaClientePorId(String token, UUID idCliente, ClienteAlteracaoRequest clienteAlteracaoRequest);
     void adicionaEnderecoCliente(UUID idCliente, EnderecoRequest enderecoRequest);
-    void adicionaEnderecoEPedidoCliente(Cliente cliente, Pedido pedido, EnderecoRequest enderecoRequest);
     void deletaClientePorId(String token, UUID idCliente);
     Cliente checaCliente(String token, UUID idCliente);
 }

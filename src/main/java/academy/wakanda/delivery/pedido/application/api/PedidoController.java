@@ -48,6 +48,13 @@ public class PedidoController implements PedidoAPI {
     }
 
     @Override
+    public void patchRetiraEntregaPedidoDoCliente(String token, UUID idCliente, UUID idPedido) {
+        log.info("[inicia] PedidoController - patchRetiraEntregaPedidoDoCliente");
+        pedidoService.retiraEntregaPedidoDoCliente(token, idCliente, idPedido);
+        log.info("[finaliza] PedidoController - patchRetiraEntregaPedidoDoCliente");
+    }
+
+    @Override
     public void patchPedidoDoClientePorId(String token, UUID idCliente, UUID idPedido, PedidoAlteracaoRequest pedidoAlteracaoRequest) {
         log.info("[inicia] PedidoController - patchPedidoDoClientePorId");
         pedidoService.alteraPedidoDoClientePorId(token, idCliente, idPedido, pedidoAlteracaoRequest);

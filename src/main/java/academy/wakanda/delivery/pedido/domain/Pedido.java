@@ -55,15 +55,21 @@ public class Pedido {
     }
 
     public void realizaEntrega() {
-        checaEntrega();
+        if (checaEntrega()) {
+            throw APIException.build(HttpStatus.BAD_REQUEST, "O pedido já foi entregue.");
+        }
         this.entrega.setPedidoEntregue(true);
         this.entrega.setDataHoraDaEntrega(LocalDateTime.now());
     }
+    public void retiraEntrega() {
+        if (checaEntrega()) {
+            this.entrega.setPedidoEntregue(false);
+            this.entrega.setDataHoraDaEntrega(null);
+        }
+    }
 
     public Boolean checaEntrega() {
-        if (this.entrega.getPedidoEntregue()) {
-            throw APIException.build(HttpStatus.BAD_REQUEST, "O pedido já foi entregue.");
-        }
-        return false;
+       return this.entrega.getPedidoEntregue();
     }
+
 }
