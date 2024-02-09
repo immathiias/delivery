@@ -15,3 +15,7 @@ api:
   security:
     token:
       secret: ${JWT_SECRET:DLPI21D9ITPLAS}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui

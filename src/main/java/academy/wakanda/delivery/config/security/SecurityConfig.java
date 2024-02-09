@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/v1/pedido/entrega").hasAnyRole("ADMIN")
                         .requestMatchers("/v1/pedido").hasAnyRole("CLIENTE")
-                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/public/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(new FiltroToken(tokenService, credencialService), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(httpSecuritySessionManagementConfigurer ->
