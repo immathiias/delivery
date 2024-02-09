@@ -1,4 +1,4 @@
-package academy.wakanda.delivery.cliente.application.api;
+package academy.wakanda.delivery.endereco.application.api;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

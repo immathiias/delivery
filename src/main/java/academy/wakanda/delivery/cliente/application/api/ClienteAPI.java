@@ -27,9 +27,7 @@ public interface ClienteAPI {
     @PatchMapping("/{idCliente}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     void patchClientePorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable UUID idCliente, @RequestBody ClienteAlteracaoRequest clienteAlteracaoRequest);
-    @PatchMapping("/{idCliente}/endereco")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    void postEndereco(@PathVariable UUID idCliente, @Valid @RequestBody EnderecoRequest enderecoRequest);
+
     @DeleteMapping("/{idCliente}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     void deleteClientePorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable UUID idCliente);

@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public interface PedidoService {
     PedidoResponse clienteRealizaPedidoCriandoEndereco(String token, UUID idCliente, PedidoRequestCriandoEndereco pedidoRequest);
+    PedidoResponse clienteRealizaPedido(String token, UUID idCliente, PedidoRequest pedidoRequest);
     List<PedidoListCliente> buscaTodosPedidosDoCliente(String token, UUID idCliente);
     PedidoDetalhadoCliente buscaPedidoDoClientePorId(String token, UUID idCliente, UUID idPedido);
     void alteraPedidoDoClientePorId(String token, UUID idCliente, UUID idPedido, PedidoAlteracaoRequest pedidoAlteracaoRequest);

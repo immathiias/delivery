@@ -1,8 +1,8 @@
 package academy.wakanda.delivery.pedido.domain;
 
-import academy.wakanda.delivery.cliente.domain.Endereco;
 import academy.wakanda.delivery.handler.APIException;
 import academy.wakanda.delivery.pedido.application.api.PedidoAlteracaoRequest;
+import academy.wakanda.delivery.pedido.application.api.PedidoRequest;
 import academy.wakanda.delivery.pedido.application.api.PedidoRequestCriandoEndereco;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
@@ -26,22 +26,34 @@ public class Pedido {
     @NotBlank
     private UUID idCliente;
     @NotBlank
+    private UUID idEnderecoEntrega;
+    @NotBlank
     private String produto;
     @NotBlank
     private String detalhesPedido;
     @NotBlank
-    private Endereco enderecoEntrega;
     private Entrega entrega;
 
     private LocalDateTime dataHoraDoPedido;
     private LocalDateTime dataHoraAlteracaoDoPedido;
 
-    public Pedido(UUID idCliente, PedidoRequestCriandoEndereco pedidoRequest, Endereco endereco) {
+    public Pedido(UUID idCliente, PedidoRequestCriandoEndereco pedidoRequest, UUID idEnderecoEntrega) {
         this.idPedido = UUID.randomUUID();
         this.idCliente = idCliente;
+        this.idEnderecoEntrega = idEnderecoEntrega;
         this.produto = pedidoRequest.getProduto();
         this.detalhesPedido = pedidoRequest.getDetalhesPedido();
-        this.enderecoEntrega = endereco;
+        this.entrega = new Entrega(false, null);
+
+        this.dataHoraDoPedido = LocalDateTime.now();
+    }
+
+    public Pedido(UUID idCliente, PedidoRequest pedidoRequest) {
+        this.idPedido = UUID.randomUUID();
+        this.idCliente = idCliente;
+        this.idEnderecoEntrega = pedidoRequest.getIdEnderecoEntrega();
+        this.produto = pedidoRequest.getProduto();
+        this.detalhesPedido = pedidoRequest.getDetalhesPedido();
         this.entrega = new Entrega(false, null);
 
         this.dataHoraDoPedido = LocalDateTime.now();
