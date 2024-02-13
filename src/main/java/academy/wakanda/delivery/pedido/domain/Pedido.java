@@ -33,7 +33,6 @@ public class Pedido {
     private String detalhesPedido;
     @NotBlank
     private Entrega entrega;
-
     private LocalDateTime dataHoraDoPedido;
     private LocalDateTime dataHoraAlteracaoDoPedido;
 
@@ -44,7 +43,6 @@ public class Pedido {
         this.produto = pedidoRequest.getProduto();
         this.detalhesPedido = pedidoRequest.getDetalhesPedido();
         this.entrega = new Entrega(false, null);
-
         this.dataHoraDoPedido = LocalDateTime.now();
     }
 
@@ -55,14 +53,12 @@ public class Pedido {
         this.produto = pedidoRequest.getProduto();
         this.detalhesPedido = pedidoRequest.getDetalhesPedido();
         this.entrega = new Entrega(false, null);
-
         this.dataHoraDoPedido = LocalDateTime.now();
     }
 
     public void altera(PedidoAlteracaoRequest pedidoAlteracaoRequest) {
         this.produto = pedidoAlteracaoRequest.getProduto();
         this.detalhesPedido = pedidoAlteracaoRequest.getDetalhesPedido();
-
         this.dataHoraAlteracaoDoPedido = LocalDateTime.now();
     }
 

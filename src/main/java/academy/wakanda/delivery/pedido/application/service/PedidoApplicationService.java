@@ -26,7 +26,6 @@ public class PedidoApplicationService implements PedidoService {
         log.info("[inicia] PedidoApplicationService - clienteRealizaPedido");
         clienteService.checaCliente(token, idCliente);
         Endereco endereco = new Endereco(idCliente, pedidoRequest.getEnderecoEntrega());
-
         Pedido pedido = pedidoRepository.salvaPedido(new Pedido(idCliente, pedidoRequest, endereco.getIdEndereco()));
         enderecoService.adicionaEnderecoCliente(idCliente, pedidoRequest.getEnderecoEntrega());
         log.info("[finaliza] PedidoApplicationService - clienteRealizaPedido");
@@ -40,7 +39,6 @@ public class PedidoApplicationService implements PedidoService {
     public PedidoResponse clienteRealizaPedido(String token, UUID idCliente, PedidoRequest pedidoRequest) {
         log.info("[inicia] PedidoApplicationService - clienteRealizaPedido");
         clienteService.checaCliente(token, idCliente);
-
         Pedido pedido = pedidoRepository.salvaPedido(new Pedido(idCliente, pedidoRequest));
         log.info("[finaliza] PedidoApplicationService - clienteRealizaPedido");
         return PedidoResponse.builder()
@@ -53,7 +51,6 @@ public class PedidoApplicationService implements PedidoService {
     public List<PedidoListCliente> buscaTodosPedidosDoCliente(String token, UUID idCliente) {
         log.info("[inicia] PedidoApplicationService - buscaTodosPedidosDoCliente");
         clienteService.checaCliente(token, idCliente);
-
         List<Pedido> pedidosDoCliente = pedidoRepository.buscaTodosPedidosDoCliente(idCliente);
         log.info("[finaliza] PedidoApplicationService - buscaTodosPedidosDoCliente");
         return PedidoListCliente.converte(pedidosDoCliente);
@@ -63,9 +60,7 @@ public class PedidoApplicationService implements PedidoService {
     public PedidoDetalhadoCliente buscaPedidoDoClientePorId(String token, UUID idCliente, UUID idPedido) {
         log.info("[inicia] PedidoApplicationService - buscaPedidoDoClientePorId");
         clienteService.checaCliente(token, idCliente);
-
         Pedido pedido = pedidoRepository.buscaPedidoDoClientePorId(idCliente, idPedido);
-
         log.info("[finaliza] PedidoApplicationService - buscaPedidoDoClientePorId");
         return new PedidoDetalhadoCliente(pedido);
     }
@@ -74,7 +69,6 @@ public class PedidoApplicationService implements PedidoService {
     public void alteraPedidoDoClientePorId(String token, UUID idCliente, UUID idPedido, PedidoAlteracaoRequest pedidoAlteracaoRequest) {
         log.info("[inicia] PedidoApplicationService - alteraPedidoDoClientePorId");
         clienteService.checaCliente(token, idCliente);
-
         Pedido pedido = pedidoRepository.buscaPedidoDoClientePorId(idCliente, idPedido);
         pedido.altera(pedidoAlteracaoRequest);
         pedidoRepository.salvaPedido(pedido);
@@ -85,7 +79,6 @@ public class PedidoApplicationService implements PedidoService {
     public void entregaPedidoDoCliente(String token, UUID idCliente, UUID idPedido) {
         log.info("[inicia] PedidoApplicationService - entregaPedidoDoCliente");
         clienteService.checaCliente(token, idCliente);
-
         Pedido pedido = pedidoRepository.buscaPedidoDoClientePorId(idCliente, idPedido);
         pedido.realizaEntrega();
         pedidoRepository.salvaPedido(pedido);
@@ -96,7 +89,6 @@ public class PedidoApplicationService implements PedidoService {
     public void retiraEntregaPedidoDoCliente(String token, UUID idCliente, UUID idPedido) {
         log.info("[inicia] PedidoApplicationService - retiraEntregaPedidoDoCliente");
         clienteService.checaCliente(token, idCliente);
-
         Pedido pedido = pedidoRepository.buscaPedidoDoClientePorId(idCliente, idPedido);
         pedido.retiraEntrega();
         pedidoRepository.salvaPedido(pedido);
@@ -107,7 +99,6 @@ public class PedidoApplicationService implements PedidoService {
     public void deletaPedidoDoClientePorId(String token, UUID idCliente, UUID idPedido) {
         log.info("[inicia] PedidoApplicationService - deletaPedidoDoClientePorId");
         clienteService.checaCliente(token, idCliente);
-
         Pedido pedido = pedidoRepository.buscaPedidoDoClientePorId(idCliente, idPedido);
         pedidoRepository.deletaPedido(pedido);
         log.info("[finaliza] PedidoApplicationService - deletaPedidoDoClientePorId");

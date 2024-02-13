@@ -31,7 +31,6 @@ public class Cliente {
     private String nome;
     @NotBlank
     private String telefone;
-
     private LocalDateTime dataHoraDoCadastro;
     private LocalDateTime dataHoraUltimaAlteracao;
 
@@ -40,14 +39,12 @@ public class Cliente {
         this.email = clienteRequest.getEmail();
         this.nome = clienteRequest.getNome();
         this.telefone = clienteRequest.getTelefone();
-
         this.dataHoraDoCadastro = LocalDateTime.now();
     }
 
     public void altera(ClienteAlteracaoRequest clienteAlteracaoRequest) {
         this.nome = clienteAlteracaoRequest.getNome();
         this.telefone = clienteAlteracaoRequest.getTelefone();
-
         this.dataHoraUltimaAlteracao = LocalDateTime.now();
     }
     public void validaCliente(UUID idCliente) {

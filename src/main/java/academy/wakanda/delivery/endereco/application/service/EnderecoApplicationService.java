@@ -33,7 +33,6 @@ public class EnderecoApplicationService implements EnderecoService {
     public List<EnderecoListResponse> buscaTodosEnderecosDoCliente(String token, UUID idCliente) {
         log.info("[inicia] EnderecoApplicationService - buscaTodosEnderecosDoCliente");
         clienteService.checaCliente(token, idCliente);
-
         List<Endereco> enderecos = enderecoRepository.buscaTodosEnderecosDoCliente(idCliente);
         log.info("[finaliza] EnderecoApplicationService - buscaTodosEnderecosDoCliente");
         return EnderecoListResponse.converte(enderecos);
@@ -43,7 +42,6 @@ public class EnderecoApplicationService implements EnderecoService {
     public EnderecoDetalhadoResponse buscaEnderecoDoClientePorId(String token, UUID idCliente, UUID idEndereco) {
         log.info("[inicia] EnderecoApplicationService - buscaEnderecoDoClientePorId");
         clienteService.checaCliente(token, idCliente);
-
         Endereco endereco = enderecoRepository.buscaEnderecoDoClientePorId(idCliente, idEndereco);
         log.info("[finaliza] EnderecoApplicationService - buscaEnderecoDoClientePorId");
         return new EnderecoDetalhadoResponse(endereco);
@@ -53,7 +51,6 @@ public class EnderecoApplicationService implements EnderecoService {
     public void alteraEnderecoDoClientePorId(String token, UUID idCliente, UUID idEndereco, EnderecoAlteracaoRequest enderecoAlteracaoRequest) {
         log.info("[inicia] EnderecoApplicationService - alteraEnderecoDoClientePorId");
         clienteService.checaCliente(token, idCliente);
-
         Endereco endereco = enderecoRepository.buscaEnderecoDoClientePorId(idCliente, idEndereco);
         endereco.altera(enderecoAlteracaoRequest);
         enderecoRepository.salvaEndereco(endereco);
@@ -64,7 +61,6 @@ public class EnderecoApplicationService implements EnderecoService {
     public void deletaEnderecoDoClientePorId(String token, UUID idCliente, UUID idEndereco) {
         log.info("[inicia] EnderecoApplicationService - deletaEnderecoDoClientePorId");
         clienteService.checaCliente(token, idCliente);
-
         Endereco endereco = enderecoRepository.buscaEnderecoDoClientePorId(idCliente, idEndereco);
         enderecoRepository.deletaEndereco(endereco);
         log.info("[finaliza] EnderecoApplicationService - deletaEnderecoDoClientePorId");

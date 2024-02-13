@@ -58,7 +58,6 @@ public class ClienteApplicationService implements ClienteService {
     public void atualizaClientePorId(String token, UUID idCliente, ClienteAlteracaoRequest clienteAlteracaoRequest) {
         log.info("[inicia] ClienteApplicationService - atualizaClientePorId");
         Cliente cliente = checaCliente(token, idCliente);
-
         cliente.altera(clienteAlteracaoRequest);
         clienteRepository.salva(cliente);
         log.info("[finaliza] ClienteApplicationService - atualizaClientePorId");
@@ -68,7 +67,6 @@ public class ClienteApplicationService implements ClienteService {
     public void deletaClientePorId(String token, UUID idCliente) {
         log.info("[inicia] ClienteApplicationService - deletaClientePorId");
         Cliente cliente = checaCliente(token, idCliente);
-
         clienteRepository.deletaCliente(cliente);
         log.info("[finaliza] ClienteApplicationService - deletaClientePorId");
     }
