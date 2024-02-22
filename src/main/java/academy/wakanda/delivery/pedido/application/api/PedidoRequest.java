@@ -1,6 +1,7 @@
 package academy.wakanda.delivery.pedido.application.api;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Value;
 
 import java.util.UUID;
@@ -11,6 +12,6 @@ public class PedidoRequest {
     private String produto;
     @NotBlank
     private String detalhesPedido;
-    @NotBlank
+    @NotNull
     private UUID idEnderecoEntrega;
 }

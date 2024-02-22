@@ -1,13 +1,19 @@
 package academy.wakanda.delivery.pedido.application.service;
 
 import academy.wakanda.delivery.cliente.application.service.ClienteService;
+import academy.wakanda.delivery.config.security.service.TokenService;
+import academy.wakanda.delivery.credencial.application.service.CredencialService;
+import academy.wakanda.delivery.credencial.domain.Credencial;
 import academy.wakanda.delivery.endereco.application.service.EnderecoService;
 import academy.wakanda.delivery.endereco.domain.Endereco;
+import academy.wakanda.delivery.handler.APIException;
 import academy.wakanda.delivery.pedido.application.api.*;
 import academy.wakanda.delivery.pedido.application.repository.PedidoRepository;
 import academy.wakanda.delivery.pedido.domain.Pedido;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +25,7 @@ import java.util.UUID;
 public class PedidoApplicationService implements PedidoService {
     private final PedidoRepository pedidoRepository;
     private final ClienteService clienteService;
+    private final TokenService tokenService;
     private final EnderecoService enderecoService;
 
     @Override
@@ -39,6 +46,7 @@ public class PedidoApplicationService implements PedidoService {
     public PedidoResponse clienteRealizaPedido(String token, UUID idCliente, PedidoRequest pedidoRequest) {
         log.info("[inicia] PedidoApplicationService - clienteRealizaPedido");
         clienteService.checaCliente(token, idCliente);
+        enderecoService.checaEndereco(idCliente, pedidoRequest.getIdEnderecoEntrega());
         Pedido pedido = pedidoRepository.salvaPedido(new Pedido(idCliente, pedidoRequest));
         log.info("[finaliza] PedidoApplicationService - clienteRealizaPedido");
         return PedidoResponse.builder()
@@ -78,7 +86,7 @@ public class PedidoApplicationService implements PedidoService {
     @Override
     public void entregaPedidoDoCliente(String token, UUID idCliente, UUID idPedido) {
         log.info("[inicia] PedidoApplicationService - entregaPedidoDoCliente");
-        clienteService.checaCliente(token, idCliente);
+        tokenService.checaAdmin(token);
         Pedido pedido = pedidoRepository.buscaPedidoDoClientePorId(idCliente, idPedido);
         pedido.realizaEntrega();
         pedidoRepository.salvaPedido(pedido);
@@ -88,7 +96,7 @@ public class PedidoApplicationService implements PedidoService {
     @Override
     public void retiraEntregaPedidoDoCliente(String token, UUID idCliente, UUID idPedido) {
         log.info("[inicia] PedidoApplicationService - retiraEntregaPedidoDoCliente");
-        clienteService.checaCliente(token, idCliente);
+        tokenService.checaAdmin(token);
         Pedido pedido = pedidoRepository.buscaPedidoDoClientePorId(idCliente, idPedido);
         pedido.retiraEntrega();
         pedidoRepository.salvaPedido(pedido);
