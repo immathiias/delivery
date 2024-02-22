@@ -3,8 +3,11 @@ package academy.wakanda.delivery.credencial.domain;
 import java.util.Collection;
 import java.util.List;
 
+import academy.wakanda.delivery.handler.APIException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Log4j2
 @Document(collection = "Credencial")
 public class Credencial implements UserDetails {
 
@@ -57,7 +61,7 @@ public class Credencial implements UserDetails {
             return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_CLIENTE"),
                     new SimpleGrantedAuthority("ROLE_USER"));
         } else {
-            return List.of(new SimpleGrantedAuthority("ROLE_CLIENTE"));
+            return List.of(new SimpleGrantedAuthority("ROLE_CLIENTE"), new SimpleGrantedAuthority("ROLE_USER"));
         }
     }
 
